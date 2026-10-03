@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Shrayas Cafe"
+description = "A responsive storefront for Shrayas Cafe with browsable cafe products, filters, product details, reviews, a persistent cart, and demo checkout."
+version = "1.0.0"
+id = "artifacts/shrayas-cafe"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23064
+
+[services.development]
+run = "pnpm --filter @workspace/shrayas-cafe run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/shrayas-cafe", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/shrayas-cafe/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23064"
+BASE_PATH = "/"
